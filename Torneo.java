@@ -17,6 +17,7 @@ public class Torneo{
     }
     public static void main(String[] args) throws IOException{
 
+        //Definir variables
         Scanner sc = new Scanner(System.in);
         ArrayList<Jugador> listaJugadores = new ArrayList<Jugador>(); 
         boolean salir = false;
@@ -44,22 +45,23 @@ public class Torneo{
                 System.out.println("\nIngrese el tipo de jugador: \n1.Líbero \n2.Pasador \n3.Auxiliares/Opuestos ");
                 int indexJugador = sc.nextInt(); 
                 
-                if(indexJugador == 1){
+                if(indexJugador == 1){ //Agrega info a líberos
                     System.out.println("\n==Líbero==");
 
                     System.out.println("\nIngrese el total de recibos del jugador: ");
                     int recibos = sc.nextInt();
 
+                    //Se agrega info a array
                     listaJugadores.add(new Libero(name, país, errores, aces, servicios, recibos));
 
+                    //Calcula los 3 mejores líbanos
                     System.out.println("\n== 3 mejores Líbanos ==");
                     for(int i = 0; i<Math.min(3, listaJugadores.size()); i++){
                         Libero mvpLiberos = new Libero(name, país, errores, aces, servicios, recibos);
-                        mvpLiberos.getMvpLibero();
                         System.out.println(mvpLiberos.getNombre() + ": " + mvpLiberos.getMvpLibero());
                     }
 
-                } if (indexJugador == 2) {
+                } if (indexJugador == 2) { //Agrega info a pasador
                     System.out.println("\n==Pasador==");
 
                     System.out.println("\nIngrese el total de pases del jugador: ");
@@ -67,8 +69,10 @@ public class Torneo{
                     System.out.println("\nIngrese el total de fintas del jugador: ");
                     int fintas = sc.nextInt();
 
+                    //Agrega info a Array
                     listaJugadores.add(new Pasador(name, país, errores, aces, servicios, pases, fintas));
 
+                    //Pasadores con más de 80% efect
                     System.out.println("\n== Pasadores con 80% de efectividad ==");
                     int pasadorEfectividad = 0;
                     for(Jugador j : listaJugadores){
@@ -82,7 +86,7 @@ public class Torneo{
                     System.out.println("\nCantidad de Pasadores con más de 85% de efectividad: " + pasadorEfectividad);
                     
 
-                } if(indexJugador == 3){
+                } if(indexJugador == 3){ //Agrega info a Auxiliares/Opuestos
                     System.out.println("\n==Auxiliares/Opuestos==");
 
                     System.out.println("\nIngrese el total de ataques del jugador: ");
@@ -92,6 +96,7 @@ public class Torneo{
                     System.out.println("\nIngrese el total de bloqueos fallidos del jugador: ");
                     int failBloquos = sc.nextInt();
 
+                    //Agrega info a Array
                     listaJugadores.add(new AuxOp(name, país, errores, aces, servicios, ataques, bloqueos, failBloquos));
 
                 } else {
@@ -103,61 +108,20 @@ public class Torneo{
             case 2: 
                 System.out.println("\n<<<Archivo Lista de Jugadores>>>\n");
                 
+                //Crea archivo CSV
                 File file = new File("Lista de Jugadores");
-                //String format = "%-10s %-8s %-4s%n";
-
                 FileWriter fw = new FileWriter(file);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("Nombre,País,Errores,Aces,Servicios,Tipo");
+                bw.write("Nombre,País,Errores,Aces,Servicios,Tipo"); //Nombre de columnas archivo
                 bw.newLine();
 
+                //Agrega info de Array a archivo
                 for(int i = 0; i<listaJugadores.size(); i++){
                     bw.write(listaJugadores.get(i+1) + "," + listaJugadores.get(i++));
                     bw.newLine();
                 }
                 bw.close();
                 fw.close();
-                
-
-                // try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
-                //     bw.write("Nombre,País,Errores,Aces,Servicios,Tipo");
-                //     System.out.printf(format, "Nombre,País,Errores,Aces,Servicios,Tipo");
-
-                //     for(Jugador j : listaJugadores){
-                //         System.out.println(j);
-                //     }
-
-                // }
-                
-                //     String format = "%-10s %-8s %-4s%n";
-
-                //     try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
-                //         bw.write("Nombre,País,Errores,Aces,Servicios,Tipo");
-
-                //         System.out.printf(format, "Nombre,País,Errores,Aces,Servicios,Tipo");
-                //         for (int i=0 ;i <listaJugadores.size() ; ++i ){
-                //             for(int j =0; j < listaJugadores.size(); j++){
-                //                 String s = String.format(",%s,%s,%s", listaJugadores.get(j));
-                //                 System.out.printf(format, listaJugadores.get(j));
-                //                 bw.write(s);
-                //             }
-                //         }
-                //     } catch (Exception e){
-                //         e.printStackTrace();
-                //     }
-
-                    //Collections.sort(listaJugadores, (a,b) -> Double.compare(b.getMvpLibero(), a.getMvpLibero()));
-                // try{  
-                //     BufferedReader brSalon = new BufferedReader(new FileReader("Jugadores.csv"));  //Lee salones.csv
-                //     while ((line = brSalon.readLine()) != null){  
-                //         jugador = line.split(splitBy);    // use comma as separator  
-                //         System.out.println("\nJugador: " + jugador[0] + "\nPaís: " + jugador[1] + "\nErrores: " + jugador[2] + "\nAces: " + jugador[3] + "\nServicios: " + jugador[4]);  //Ordena datos separados por comas
-                //         }  
-                //     System.out.println("\nSe ha cargado el archivo exitosamente!");        
-                // } catch (IOException e)   {  
-                //         //e.printStackTrace();  
-                //     }
-                
                 break;
 
             case 3:
